@@ -19,5 +19,5 @@ from blog.core.views import Home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Home.as_view()),
+    path('', Home.as_view(), name='list'),
 ]
