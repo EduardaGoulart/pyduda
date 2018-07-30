@@ -1,13 +1,30 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.text import slugify
+
+
+'''
+def get_image_filename(instance, filename):
+    title = instance.post.title
+    slug = slugify(title)
+    return "post_images/%s-%s" % (slug, filename)
+
+
+class Images(models.Model):
+    # post = models.ForeignKey(Preview, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=get_image_filename,
+                              verbose_name='Image')
+
+'''
 
 
 class Preview(models.Model):
+    id_publish = models.IntegerField()
     author = models.CharField(max_length=250)
     resume = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
     pushised_data = models.DateTimeField(blank=True, null=True)
-    id_publish = models.IntegerField()
+    # photo = models.ImageField(upload_to=None, null=True, blank=True)
 
     def publish(self):
         self.pushised_data = timezone.now()
@@ -23,6 +40,7 @@ class Tutorial(models.Model):
     resume = models.TextField()
     title = models.CharField(max_length=250)
     pushised_data = models.DateTimeField(blank=True, null=True)
+    # images = models.ManyToManyField(Images)
 
     def publish(self):
         self.id_publish = timezone.now()
@@ -32,7 +50,7 @@ class Tutorial(models.Model):
         return self.title
 
 
-class PreviewLife(models.Model):
+class LifeResume(models.Model):
     author = models.CharField(max_length=250)
     resume = models.CharField(max_length=500)
     title = models.CharField(max_length=100)
@@ -47,7 +65,7 @@ class PreviewLife(models.Model):
         return self.title
 
 
-class TutorialLife(models.Model):
+class LifeContent(models.Model):
     id_publish = models.IntegerField()
     author = models.CharField(max_length=250)
     resume = models.TextField()
